@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="icon" href="/src/icono.jpg" type="image/jpg">
+    <title>Iniciar Sesión</title>
+</head>
+<body>
+    <main>
+        <section id="Imagen">
+
+            <img src="/src/login.jpg">
+
+        </section>
+        <section class="Contenido">
+
+            <h1>Bienvenidos a PrograRed</h1>
+            <p>PrograRed es una red social para programadores donde pueden compartir proyectos, resolver retos, conectar con otros desarrolladores y colaborar en la comunidad</p>
+            <h3>Usuario</h3>
+            <input type="text" id="Inp_Usuario" required placeholder="Usuario_123" oninput="this.value = this.value.replace(/[^A-Za-zñÑÁÉÍÓÚáéíóú0-9_]/g, '');" autocomplete="off">
+            <h3>Contraseña</h3>
+            <input type="text" id="Inp_Clave" required placeholder="uce_123" oninput="this.value = this.value.replace(/[^A-Za-zñÑÁÉÍÓÚáéíóú0-9_]/g, '');" autocomplete="off">
+           
+            <a href="/olvide_password">¿Olvidaste tu contraseña?</a>
+
+
+            <button id="Btn_Iniciar_Sesion" style="background-color: #D32B2B; color: white; margin-top: 20px;">Iniciar Sesión</button>
+            <button id="Btn_Crear_Cuenta" style="color: #D32B2B; margin-bottom: 20px;">Crear Cuenta</button>
+
+        </section>
+    </main>
+
+    <script src="/js/index.js"></script>
+
+</body>
+</html>
+

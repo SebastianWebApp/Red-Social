@@ -1,0 +1,311 @@
+version: '3.8'
+
+services:
+
+  # <-------------------------------------- Bases de datos ---------------------------------------------------->
+  base_mysql:
+    image: mysql:latest
+    container_name: base_mysql
+    ports:
+      - "3307:${PORT_MYSQL}" # Puerto para conectar MySQL
+
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"   # Contraseña del usuario root
+
+    # Se coloca esta parte para que si ocurre un error se reinicie de forma automática
+    restart: always # Reinicia automáticamente en caso de error
+
+
+    volumes:
+      - mysql_data:/var/lib/mysql # Volumen persistente para datos
+    networks:
+      - app-network
+
+    # Servicio para Redis
+  
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "${PORT_REDIS}:${PORT_REDIS}"  # Mapeo del puerto 4000
+    restart: always # Reinicia automáticamente en caso de error
+    networks:
+      - app-network
+    volumes:
+    - redis_data:/data  # Volumen para persistencia de datos
+
+  base_mongoDB:
+    image: mongo:latest
+    container_name: base_mongoDB
+    ports:
+      - "${PORT_MONGODB}:${PORT_MONGODB}"
+    
+    restart: always # Reinicio del microservicio en caso de fallo
+
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - app-network
+  
+  # <------------------------------ Microservicios de Estructura de Base ---------------------------------------------->
+
+  estructura_configuracion_perfil:
+    build: ./Microservicios/Estructura_Configuracion_Perfil
+    container_name: estructura_configuracion_perfil
+    image: sebastianwebapp/red_social_estructura_configuracion_perfil:latest
+    ports:
+      - "${PORT_ESTRUCTURA_CONFIGURACION_PERFIL}:${PORT_ESTRUCTURA_CONFIGURACION_PERFIL}"  # Mapeo del puerto 4000
+  
+    depends_on:
+      - base_mysql
+    
+    restart: "no" 
+
+    networks:
+      - app-network
+  
+  estructura_iniciar_sesion:
+    build: ./Microservicios/Estructura_Iniciar_Sesion
+    container_name: estructura_iniciar_sesion
+    image: sebastianwebapp/red_social_estructura_iniciar_sesion:latest
+    ports:
+      - "${PORT_ESTRUCTURA_INICIAR_SESION}:${PORT_ESTRUCTURA_INICIAR_SESION}"  # Mapeo del puerto 4000
+  
+    depends_on:
+      - base_mysql
+    
+    restart: "no" 
+
+    networks:
+      - app-network
+  
+  estructura_mis_habilidades:
+    build: ./Microservicios/Estructura_Mis_Habilidades
+    container_name: estructura_mis_habilidades
+    image: sebastianwebapp/red_social_estructura_mis_habilidades:latest
+    ports:
+      - "${PORT_ESTRUCTURA_MIS_HABILIDADES}:${PORT_ESTRUCTURA_MIS_HABILIDADES}"  # Mapeo del puerto 4000
+  
+    depends_on:
+      - base_mysql
+    
+    restart: "no" 
+
+    networks:
+      - app-network
+  
+  
+  
+  # <-------------------------------------- Microservicios ---------------------------------------------------->
+
+  # NOTA: Los microservicios no necesitan volumen ya que no tienen datos a persistir
+
+  encriptacion:
+    build: ./Microservicios/Encriptacion
+    container_name: encriptacion
+    image: sebastianwebapp/red_social_encriptacion:latest
+    ports:
+      - "${PORT_ENCRIPTACION}:${PORT_ENCRIPTACION}"  # Mapeo del puerto 4000
+      
+    restart: always # Reinicio del microservicio en caso de fallo
+
+    networks:
+      - app-network
+
+  verificacion_whatsapp:
+    build: ./Microservicios/Verificacion_Whatsapp
+    container_name: verificacion_whatsapp
+    image: sebastianwebapp/red_social_verificacion_whatsapp:latest
+    ports:
+      - "${PORT_VERIFICACION_WHATSAPP}:${PORT_VERIFICACION_WHATSAPP}"
+
+    restart: always # Reinicio del microservicio en caso de fallo
+    depends_on:
+      - redis 
+
+    networks:
+      - app-network
+
+  inicio_sesion:
+    build: ./Microservicios/Inicio_Sesion
+    container_name: inicio_sesion
+    image: sebastianwebapp/red_social_inicio_sesion:latest
+    ports:
+      - "${PORT_INICIO_SESION}:${PORT_INICIO_SESION}"  # Mapeo del puerto 4000
+  
+    depends_on:
+      - base_mysql
+      - encriptacion  
+
+
+    
+    restart: always # Reinicio del microservicio en caso de fallo
+
+    networks:
+      - app-network
+
+  jwt:
+    build: ./Microservicios/Jwt
+    container_name: jwt
+    image: sebastianwebapp/red_social_jwt:latest
+    ports:
+      - "${PORT_JWT}:${PORT_JWT}"  
+      
+    restart: always # Reinicio del microservicio en caso de fallo
+
+    networks:
+      - app-network
+
+  texto_ia:
+    build: ./Microservicios/Texto_IA
+    container_name: texto_ia
+    image: sebastianwebapp/red_social_texto_ia:latest
+    ports:
+      - "${PORT_TEXTO_IA}:${PORT_TEXTO_IA}"  
+    
+    environment:
+      - RACK_ENV=production
+      
+    restart: always # Reinicio del microservicio en caso de fallo
+
+    networks:
+      - app-network
+
+  subir_imagen:
+    build: ./Microservicios/Subir_Imagen
+    container_name: subir_imagen
+    image: sebastianwebapp/red_social_subir_imagen:latest
+    ports:
+      - "${PORT_SUBIR_IMAGEN}:${PORT_SUBIR_IMAGEN}"  
+      
+    restart: always # Reinicio del microservicio en caso de fallo
+
+    networks:
+      - app-network
+
+  configuracion_perfil:
+    build: ./Microservicios/Configuracion_Perfil
+    container_name: configuracion_perfil
+    image: sebastianwebapp/red_social_configuracion_perfil:latest
+    ports:
+      - "${PORT_CONFIGURACION_PERFIL}:${PORT_CONFIGURACION_PERFIL}"  
+    
+    depends_on:
+      - base_mysql
+      
+    restart: always # Reinicio del microservicio en caso de fallo
+
+    networks:
+      - app-network
+
+  crear_habilidades:
+    build: ./Microservicios/Crear_Habilidades
+    container_name: crear_habilidades
+    image: sebastianwebapp/red_social_crear_habilidades:latest
+    ports:
+      - "${PORT_CREAR_HABILIDADES}:${PORT_CREAR_HABILIDADES}"  # Mapeo del puerto 4000
+  
+    depends_on:
+      - base_mysql
+
+    restart: always # Reinicio del microservicio en caso de fallo
+
+    networks:
+      - app-network
+
+  mis_habilidades:
+    build: ./Microservicios/Mis_Habilidades
+    container_name: mis_habilidades
+    image: sebastianwebapp/red_social_mis_habilidades:latest
+    ports:
+      - "${PORT_MIS_HABILIDADES}:${PORT_MIS_HABILIDADES}"  # Mapeo del puerto 4000
+  
+    depends_on:
+      - base_mysql
+
+    restart: always # Reinicio del microservicio en caso de fallo
+
+    networks:
+      - app-network
+
+  crear_publicacion:
+    build: ./Microservicios/Crear_Publicaciones
+    container_name: crear_publicacion
+    image: sebastianwebapp/red_social_crear_publicacion:latest
+    ports:
+      - "${PORT_CREAR_PUBLICACIONES}:${PORT_CREAR_PUBLICACIONES}"  # Mapeo del puerto 4000
+  
+    depends_on:
+      - base_mongoDB
+    
+    restart: always # Reinicio del microservicio en caso de fallo
+
+    networks:
+      - app-network
+  
+  mostrar_publicaciones:
+    build: ./Microservicios/Mostrar_Publicaciones
+    container_name: mostrar_publicaciones
+    image: sebastianwebapp/red_social_mostrar_publicaciones:latest
+    ports:
+      - "${PORT_MOSTRAR_PUBLICACIONES}:${PORT_MOSTRAR_PUBLICACIONES}"  # Mapeo del puerto 4000
+    
+    restart: always # Reinicio del microservicio en caso de fallo
+
+    networks:
+      - app-network
+  
+  
+  # <-------------------------------------- Frontend ---------------------------------------------------->
+
+  # Servicio del Frontend
+  frontend:
+    build:
+      context: ./Frontend # En donde se encuentra el archivo Dockerfile
+    container_name: frontend
+    image: sebastianwebapp/red_social_frontend:latest
+    ports:
+      - "${PORT_FRONTEND}:${PORT_FRONTEND}"  # Mapea el puerto 3000
+
+    
+    restart: always # Reinicio del microservicio en caso de fallo
+
+
+    depends_on:
+      - estructura_iniciar_sesion
+      - estructura_configuracion_perfil
+      - estructura_mis_habilidades
+      - inicio_sesion # Asegura que el backend se ejecute primero
+      - jwt
+      - verificacion_whatsapp
+      - texto_ia
+      - subir_imagen
+      - configuracion_perfil
+      - crear_habilidades
+      - mis_habilidades
+      - crear_publicacion
+      - mostrar_publicaciones
+      
+    networks:
+      - app-network # Si no se coloca en la misma red no van a poder interactuar
+
+
+
+
+# <----------------------- Configuración de redes y volúmenes ------------------------------------------>
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+
+  mysql_data:
+    driver: local
+
+  mongodb_data:
+    driver: local
+  
+  redis_data:
+    driver: local
+

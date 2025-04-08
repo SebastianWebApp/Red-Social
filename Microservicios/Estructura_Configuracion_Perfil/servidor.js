@@ -1,0 +1,30 @@
+import express, {json} from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import Test_Conexion from "./Controladores/test_conexion.js";
+
+dotenv.config();
+
+Test_Conexion();
+
+const PORT = process.env.PORT;
+
+const app = express();
+
+// Middlewares
+app.use(cors());
+
+app.use(json());
+
+
+app.use((req,res) =>{
+    res.status(404).json({
+        Estado: false,
+        Respuesta: "Recurso no encontrado"
+    })
+});
+
+
+app.listen(PORT, () => {
+    console.log(`Servidor Activo http://localhost:${PORT}`);
+})

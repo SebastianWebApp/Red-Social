@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/configuracion_perfil.css">
+    <link rel="icon" href="/src/icono.jpg" type="image/jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">    
+    <title>Configuración de Credenciales</title>
+</head>
+<body>
+
+    <main id="ContenedorGeneral">
+
+        <section id="ContenedorMaterias_Bloque_F1">
+
+            <div class="ContenedorMaterias_Bloque_F1_Opciones" id="mi_perfil">
+                <img src="/src/home.png" alt="Inicio" style="vertical-align: middle;">
+                <span style="vertical-align: middle;">Mi Perfil</span>
+            </div>
+
+            <div class="ContenedorMaterias_Bloque_F1_Opciones" onclick="location.href = '/configuracion/perfil';">
+                <img src="/src/editar_perfil.png" alt="Perfil" style="vertical-align: middle;">
+                <span style="vertical-align: middle;">Editar Perfil</span>
+            </div>
+            
+
+            <div class="ContenedorMaterias_Bloque_F1_Opciones" style="border-radius: 20px; border: 2px solid #083D77;" onclick="location.href = '/configuracion/credenciales';">
+                <img src="/src/password.png" alt="Credenciales" style="vertical-align: middle;">
+                <span style="vertical-align: middle;">Credenciales</span>
+            </div>
+
+            <div class="ContenedorMaterias_Bloque_F1_Opciones" onclick="location.href = '/configuracion/habilidades';">
+                <img src="/src/skill.png" alt="Habilidades"  style="vertical-align: middle;">
+                <span style="vertical-align: middle;">Habilidades</span>
+            </div>
+
+           
+
+            <div class="ContenedorMaterias_Bloque_F1_Opciones" onclick="location.href = '/';">
+                <img src="/src/salir.png" alt="Salir" style="vertical-align: middle;">
+                <span style="vertical-align: middle;">Salir</span>
+            </div>
+
+           
+          
+            <div id="menuToggle"> 
+              <input id="checkbox" type="checkbox">
+              <label class="toggle" for="checkbox">
+                  <div class="bar bar--top"></div>
+                  <div class="bar bar--middle"></div>
+                  <div class="bar bar--bottom"></div>
+              </label>
+
+              <div id="menu">
+                <ul>
+                    <li><a id="mi_perfil1">Mi Perfil</a></li>
+                    <li><a onclick="location.href = '/configuracion/perfil';">Editar Perfil</a></li>
+                    <li><a onclick="location.href = '/configuracion/credenciales';">Credenciales</a></li>
+                    <li><a onclick="location.href = '/configuracion/habilidades';">Habilidades</a></li>
+                    <li><a onclick="location.href = '/';">Salir</a></li>
+                </ul>
+            </div>
+            </div>
+      
+
+        </section>
+
+        <section id="ContenedorMaterias_Bloque_F2">
+            <h1>Credenciales</h1>
+
+            <h3>Nombre de usuario</h3>
+            <input id="Inp_Nombre" type="text" disabled>
+
+            <h3>Teléfono</h3>
+            <input id="Inp_Telefono" type="text" required placeholder="0987654321" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="off">
+
+            <h3>Contraseña</h3>
+            <input id="Inp_Password" type="text" required placeholder="uce_123" maxlength="30" oninput="this.value = this.value.replace(/[^A-Za-zñÑÁÉÍÓÚáéíóú0-9_]/g, '');" autocomplete="off">
+
+         
+            <button id="Btn_Guardar_Cambios">Guardar Cambios</button>
+
+
+
+        </section>
+
+    </main>
+
+
+    <script src="/js/configuracion_credenciales.js"></script>
+
+</body>
+</html>
+

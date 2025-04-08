@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/mostrar_publicaciones.css">
+    <link rel="icon" href="/src/icono.jpg" type="image/jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">   
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script> 
+    <title>Perfil</title>
+</head>
+<body>
+
+    <main id="ContenedorGeneral">
+
+        <section id="ContenedorMaterias_Bloque_F1">
+         
+            <!-- <div class="ContenedorMaterias_Bloque_F1_Opciones" style="border-radius: 20px; border: 2px solid #083D77;" onclick="location.href = '/';">
+                <img src="/src/user.png" alt="Perfil" style="vertical-align: middle;">
+                <span style="vertical-align: middle;">Inicio</span>
+            </div> -->
+            
+            <div class="ContenedorMaterias_Bloque_F1_Opciones" id="Mi_Perfil">
+                <img src="/src/user.png" alt="Mi Perfil" style="vertical-align: middle;">
+                <span style="vertical-align: middle;">Mi Perfil</span>
+            </div> 
+
+
+            <div class="ContenedorMaterias_Bloque_F1_Opciones" onclick="location.href = '/configuracion/perfil';">
+                <img src="/src/editar_perfil.png" alt="Editar Perfil" style="vertical-align: middle;">
+                <span style="vertical-align: middle;">Editar Perfil</span>
+            </div>
+
+            <div class="ContenedorMaterias_Bloque_F1_Opciones" onclick="location.href = '/video_llamada';">
+                <img src="/src/video.png" alt="Video Llamada" style="vertical-align: middle;">
+                <span style="vertical-align: middle;">Video Llamada</span>
+            </div>
+            
+
+            <!-- <div class="ContenedorMaterias_Bloque_F1_Opciones" onclick="location.href = '/';">
+                <img src="/src/salir.png" alt="Salir" style="vertical-align: middle;">
+                <span style="vertical-align: middle;">Mis Amigos</span>
+            </div>
+         
+            <div class="ContenedorMaterias_Bloque_F1_Opciones" onclick="location.href = '/';">
+                <img src="/src/salir.png" alt="Salir" style="vertical-align: middle;">
+                <span style="vertical-align: middle;">Buscar Amigos</span>
+            </div>
+           
+            <div class="ContenedorMaterias_Bloque_F1_Opciones" onclick="location.href = '/';">
+                <img src="/src/salir.png" alt="Salir" style="vertical-align: middle;">
+                <span style="vertical-align: middle;">Sugerencia de Amigos</span>
+            </div> -->
+
+            <div class="ContenedorMaterias_Bloque_F1_Opciones" onclick="location.href = '/';">
+                <img src="/src/salir.png" alt="Salir" style="vertical-align: middle;">
+                <span style="vertical-align: middle;">Salir</span>
+            </div>
+           
+          
+            <div id="menuToggle"> 
+              <input id="checkbox" type="checkbox">
+              <label class="toggle" for="checkbox">
+                  <div class="bar bar--top"></div>
+                  <div class="bar bar--middle"></div>
+                  <div class="bar bar--bottom"></div>
+              </label>
+
+              <div id="menu">
+                <ul>
+                    <li><a id="Mi_Perfil1">Mi Perfil</a></li>              
+                    <li><a onclick="location.href = '/configuracion/perfil';">Editar Perfil</a></li>
+                    <li><a onclick="location.href = '/video_llamada';">Video Llamada</a></li>
+                    <li><a onclick="location.href = '/';">Salir</a></li>              
+                </ul>
+            </div>
+            </div>
+      
+
+        </section>
+
+        <section id="ContenedorMaterias_Bloque_F2">  
+            
+            <div id="Contenedor_Informacion">
+                <img id="Img_Perfil">
+
+                <div>
+                    <h1 id="Lab_Nombre"></h1>
+                    <p id="Lab_Descripcion"></p>
+                </div>
+            </div>
+
+
+            <button id="Btn_Crear_Publicacion" style="display: none; margin-bottom: 20px;" >Crear Publicación</button>
+
+            <div id="Contenedor_Publicaciones">
+
+            </div>
+                    
+        </section>
+
+    </main>
+
+
+    <script src="/js/mi_perfil.js"></script>
+
+</body>
+</html>
+

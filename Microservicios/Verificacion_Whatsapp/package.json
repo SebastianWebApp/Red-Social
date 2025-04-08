@@ -1,0 +1,24 @@
+{
+  "name": "verificacion_whatsapp",
+  "version": "1.0.0",
+  "description": "Envió del mensaje de whatsapp con el código de verificación",
+  "main": "servidor.js",
+  "type": "module",
+  "scripts": {
+    "start": "node servidor.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "SebastianWebApp"
+  },
+  "author": "Mateo Espinosa",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "2.8.5",
+    "dotenv": "16.4.7",
+    "express": "4.21.2",
+    "redis": "4.7.0",
+    "twilio": "5.3.7"
+  }
+}

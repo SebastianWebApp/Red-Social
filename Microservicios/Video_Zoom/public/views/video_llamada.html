@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/video_llamada.css">
+    <link rel="icon" href="/src/icono.jpg" type="image/jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">  
+    <title>Video Llamada</title>   
+</head>
+<body>
+
+    <section id="Contenedor">
+        <div id="Contenedor_Configuracion" class="popup">
+        <article class="form">
+          <div class="icon">
+            <img src="/src/video.png" style="width: 60px;">
+          </div>
+          <div class="note">
+            <label class="title">Organiza Encuentros Eficientes con tu Grupo</label>
+            <span class="subtitle">Planifica reuniones productivas con tus amigos o colaboradores para compartir ideas, coordinar proyectos y fortalecer la comunicación en equipo.</span>
+          </div>
+          <input placeholder="Ingrese el código de la reunión" title="Ingrese el código de la reunión" type="text" id="Inp_Codigo" class="input_field" autocomplete="off">
+          <button class="submit" id="Btn_Unirse">Unirse a una sala</button>
+          <button class="submit" id="Btn_Crear">Crear nueva reunión</button>
+
+        </article>
+        </div>
+
+        <div id="Contenedor_Salas" style="display: none;">
+
+            <!-- From Uiverse.io by kennyotsu --> 
+            <div class="notifications-container">
+                <div class="success">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                    <svg class="succes-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    </div>
+                    <div class="success-prompt-wrap">
+                    <p class="success-prompt-heading" id="Mensaje_Codigo"></p>                  
+                    <div class="success-button-container">
+                        <button type="button" id="Btn_Colgar" class="success-button-main">
+                        Terminar Llamada
+                        </button>                       
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+  
+            
+            <div id="videosContainer"></div>
+        
+        </div>
+    </section>
+
+   
+
+
+
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const Btn_Unirse = document.getElementById('Btn_Unirse');
+        const Btn_Crear = document.getElementById('Btn_Crear');
+        const Inp_Codigo = document.getElementById('Inp_Codigo');
+        const Btn_Colgar = document.getElementById('Btn_Colgar');
+    
+        // Iniciamos el servidor
+        // const socket = io("https://9062-2800-370-126-2e50-b7af-9ac6-72b4-a50e.ngrok-free.app");  //con url
+        const socket = io();
+
+        let localStream;
+        let peerConnections = {};  // Guardará las conexiones de los usuarios
+        let remoteVideos = {};      // Guardará los videos remotos
+        const config = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] };
+    
+
+
+        Btn_Unirse.onclick = () => {
+            roomCode = Inp_Codigo.value;
+            if (roomCode) {
+                socket.emit('unirse_sala', {code:roomCode});
+                document.getElementById("Mensaje_Codigo").innerHTML = "El código de acceso a la sala es: " + roomCode;                
+            }            
+        };
+        
+        Btn_Crear.onclick = () => {
+            roomCode = Math.random().toString(36).substring(2, 8);
+            document.getElementById("Mensaje_Codigo").innerHTML = "El código de acceso a la sala es: " + roomCode;
+            socket.emit('crear_sala', {code:roomCode});
+        };
+
+        // Cuando el socket se conecta con otros usuarios, crea una conexión WebRTC para cada uno
+        socket.on('iniciando_llamada', (userId) => {
+
+            document.getElementById("Contenedor_Configuracion").style.display = "none";
+            document.getElementById("Contenedor_Salas").style.display = "flex";
+            document.getElementById("Contenedor").style.height = "auto";
+            
+            Iniciar_Llamada();
+
+        });
+            
+        socket.on('usuario_conectado', (userId) => {
+                
+            // Solo se crea la conexión si no existe ya
+            if (!peerConnections[userId]) {
+                createPeerConnection(userId);
+            }
+        });
+
+        // Escuchar el evento 'error' que emite el servidor
+        socket.on('error', (message) => {
+            // Mostrar el mensaje de error en la consola (o en algún lugar de la UI)
+            alert(message); // Usamos 'alert' para mostrarlo como una alerta emergente
+        });
+    
+
+        // Acción al recibir una oferta de otro usuario
+        socket.on('envio_llamada', async (offer, userId) => {
+                await handleOffer(offer, userId);
+            });
+    
+        // Acción al recibir una respuesta de otro usuario
+        socket.on('respuesta_llamada', async (answer, userId) => {
+                await handleAnswer(answer, userId);
+            });
+    
+        // Acción al recibir un candidato ICE de otro usuario
+        socket.on('ice-candidate', (candidate, userId) => {
+                if (peerConnections[userId]) {
+                    peerConnections[userId].addIceCandidate(new RTCIceCandidate(candidate));
+                }
+            });
+
+        // Manejar la desconexión de un usuario
+        socket.on('user-disconnected', (userId) => {
+                if (peerConnections[userId]) {
+                    // Cierra la conexión WebRTC
+                    peerConnections[userId].close();
+                    // Elimina el video remoto correspondiente usando el userId como id
+                    const videoElement = document.getElementById(userId);
+                    if (videoElement) {
+                        videoElement.remove();
+                    }
+                    delete remoteVideos[userId];
+                    delete peerConnections[userId];
+                }
+            });
+    
+
+
+        
+        async function Iniciar_Llamada(){
+
+            // Solicita acceso a la cámara y el micrófono del usuario
+            localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            
+            // Muestra el video local
+            const localVideo = document.createElement('video');
+            localVideo.srcObject = localStream;
+            localVideo.autoplay = true;
+            localVideo.muted = true;
+            document.getElementById('videosContainer').appendChild(localVideo);    
+                
+        }
+
+        Btn_Colgar.onclick = () => {
+            // Cierra todas las conexiones WebRTC y detiene los medios locales
+
+            for (const userId in peerConnections) {
+                peerConnections[userId].close();
+            }
+    
+            for (const track of localStream.getTracks()) {
+                track.stop();
+            }
+
+            
+    
+            document.getElementById('videosContainer').innerHTML = '';
+            document.getElementById("Contenedor_Configuracion").style.display = "flex";
+            document.getElementById("Contenedor_Salas").style.display = "none";
+            document.getElementById("Contenedor").style.height = "100%";
+
+            socket.emit('user-disconnected', socket.id);
+
+        };
+    
+        function createPeerConnection(userId) {
+
+            // Crea una nueva conexión WebRTC para el usuario
+            const peerConnection = new RTCPeerConnection(config);
+            peerConnections[userId] = peerConnection;
+    
+            // Agrega los medios locales a la conexión
+            localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+    
+            // Maneja los candidatos ICE
+            peerConnection.onicecandidate = (event) => {
+                if (event.candidate) {
+                    socket.emit('ice-candidate', event.candidate, userId);
+                }
+            };
+    
+            // Muestra el video remoto cuando se recibe un flujo
+            peerConnection.ontrack = (event) => {
+                if (!remoteVideos[userId]) {  // Evita agregar el video varias veces
+                    let remoteVideo = document.createElement('video');
+                    remoteVideo.id = userId; // Asigna un id único al video
+                    remoteVideo.srcObject = event.streams[0];
+                    remoteVideo.autoplay = true;
+                    document.getElementById('videosContainer').appendChild(remoteVideo);
+                    remoteVideos[userId] = remoteVideo;
+                }
+            };
+    
+            // Crea una oferta de conexión y la envía al usuario
+            peerConnection.createOffer()
+                .then((offer) => {
+                    return peerConnection.setLocalDescription(offer);
+                })
+                .then(() => {
+                    socket.emit('envio_llamada', peerConnection.localDescription, userId);
+                });
+        }
+    
+        async function handleOffer(offer, userId) {
+            // Crea una conexión WebRTC si no existe
+            if (!peerConnections[userId]) {
+                createPeerConnection(userId);
+            }
+    
+            // Establece la oferta recibida
+            await peerConnections[userId].setRemoteDescription(new RTCSessionDescription(offer));
+    
+            // Crea y envía una respuesta (answer)
+            const answer = await peerConnections[userId].createAnswer();
+            await peerConnections[userId].setLocalDescription(answer);
+            socket.emit('respuesta_llamada', answer, userId);
+        }
+    
+        async function handleAnswer(answer, userId) {
+            // Establece la respuesta recibida
+            await peerConnections[userId].setRemoteDescription(new RTCSessionDescription(answer));
+        }
+    </script>
+</body>
+</html>

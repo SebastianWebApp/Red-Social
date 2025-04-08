@@ -1,0 +1,68 @@
+$eq: Igual a.
+
+Descripción: Devuelve los documentos donde el valor del campo es igual al valor proporcionado.
+Ejemplo: { age: { $eq: 25 } } — Busca documentos donde age sea igual a 25.
+$ne: No es igual a.
+
+Descripción: Devuelve los documentos donde el valor del campo no es igual al valor proporcionado.
+Ejemplo: { age: { $ne: 25 } } — Busca documentos donde age no sea igual a 25.
+$gt: Mayor que.
+
+Descripción: Devuelve los documentos donde el valor del campo es mayor que el valor proporcionado.
+Ejemplo: { age: { $gt: 25 } } — Busca documentos donde age sea mayor que 25.
+$gte: Mayor o igual que.
+
+Descripción: Devuelve los documentos donde el valor del campo es mayor o igual que el valor proporcionado.
+Ejemplo: { age: { $gte: 25 } } — Busca documentos donde age sea mayor o igual a 25.
+$lt: Menor que.
+
+Descripción: Devuelve los documentos donde el valor del campo es menor que el valor proporcionado.
+Ejemplo: { age: { $lt: 25 } } — Busca documentos donde age sea menor que 25.
+$lte: Menor o igual que.
+
+Descripción: Devuelve los documentos donde el valor del campo es menor o igual que el valor proporcionado.
+Ejemplo: { age: { $lte: 25 } } — Busca documentos donde age sea menor o igual a 25.
+$in: Está en un conjunto de valores.
+
+Descripción: Devuelve los documentos donde el valor del campo esté dentro de una lista de valores proporcionada.
+Ejemplo: { age: { $in: [25, 30, 35] } } — Busca documentos donde age sea uno de los valores de la lista.
+$nin: No está en un conjunto de valores.
+
+Descripción: Devuelve los documentos donde el valor del campo no esté dentro de una lista de valores proporcionada.
+Ejemplo: { age: { $nin: [25, 30, 35] } } — Busca documentos donde age no sea uno de los valores de la lista.
+$exists: El campo existe.
+
+Descripción: Devuelve los documentos donde el campo existe o no existe.
+Ejemplo: { age: { $exists: true } } — Busca documentos donde el campo age exista.
+$type: Tipo de dato.
+
+Descripción: Devuelve los documentos donde el tipo del campo coincide con el tipo especificado.
+Ejemplo: { age: { $type: "int" } } — Busca documentos donde el campo age sea de tipo int.
+$regex: Expresión regular.
+
+Descripción: Devuelve los documentos donde el campo coincide con la expresión regular proporcionada.
+Ejemplo: { name: { $regex: /^J/ } } — Busca documentos donde name empiece con "J".
+$text: Búsqueda de texto completo.
+
+Descripción: Devuelve documentos que coinciden con una consulta de texto completo.
+Ejemplo: { $text: { $search: "MongoDB" } } — Busca documentos que contienen la palabra "MongoDB" en un campo indexado para búsquedas de texto completo.
+$elemMatch: Coincidencia en un arreglo.
+
+Descripción: Devuelve los documentos donde al menos un elemento en un arreglo coincide con las condiciones especificadas.
+Ejemplo: { tags: { $elemMatch: { $eq: "mongodb" } } } — Busca documentos donde tags contiene el valor "mongodb".
+$and: Operador lógico AND.
+
+Descripción: Devuelve los documentos que cumplen todas las condiciones especificadas en el array.
+Ejemplo: { $and: [{ age: { $gt: 25 } }, { age: { $lt: 35 } }] } — Busca documentos donde age sea mayor que 25 y menor que 35.
+$or: Operador lógico OR.
+
+Descripción: Devuelve los documentos que cumplen al menos una de las condiciones especificadas en el array.
+Ejemplo: { $or: [{ age: { $lt: 25 } }, { age: { $gt: 35 } }] } — Busca documentos donde age sea menor que 25 o mayor que 35.
+$nor: Operador lógico NOR (no OR).
+
+Descripción: Devuelve los documentos que no cumplen ninguna de las condiciones especificadas.
+Ejemplo: { $nor: [{ age: { $lt: 25 } }, { age: { $gt: 35 } }] } — Busca documentos donde age no sea ni menor que 25 ni mayor que 35.
+$size: Tamaño del arreglo.
+
+Descripción: Devuelve los documentos donde el campo arreglo tenga el tamaño especificado.
+Ejemplo: { tags: { $size: 3 } } — Busca documentos donde el arreglo tags tenga exactamente 3 elementos.

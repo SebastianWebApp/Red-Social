@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="icon" href="/src/icono.jpg" type="image/jpg">
+    <title>Código de Verificación</title>
+</head>
+<body>
+    <main>
+        <section id="Imagen">
+
+            <img src="/src/login.jpg">
+
+        </section>
+        <section class="Contenido">
+
+            <h1>Bienvenidos a PrograRed</h1>
+            <p>PrograRed es una red social para programadores donde pueden compartir proyectos, resolver retos, conectar con otros desarrolladores y colaborar en la comunidad</p>
+            <h3>Código de verificación</h3>
+            <input id="Inp_Codigo" type="text" required placeholder="123456" oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="off">
+            <button id="Bnt_Verificar_Codigo" style="background-color: #D32B2B; color: white; margin-top: 20px;">Verificar Código</button>
+            <button id="Bnt_Reenviar_Codigo" style="color: #D32B2B; margin-bottom: 20px;">Reenviar Código</button>
+
+        </section>
+    </main>
+
+    <script type="module" src="../js/codigo_verificacion.js"></script>
+
+</body>
+</html>
+

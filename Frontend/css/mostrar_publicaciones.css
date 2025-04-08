@@ -1,0 +1,353 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+html,body{
+    width: 100%;
+    height: 100%;  
+    font-family: "Roboto", sans-serif;
+    background-color: #f5f5f5;   
+    overflow: hidden;  
+}
+
+h1{
+    font-size: 35px;
+    color: #000000;
+    margin-bottom: 10px;
+}
+h3{
+    margin-bottom: 10px;
+    display: inline-block;
+}
+p{
+    size: 10px;
+    margin-bottom: 20px;
+}
+
+textarea{
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    box-sizing: border-box;
+    resize: none;
+    font-family: "Roboto", sans-serif;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+button{
+    width: 100%;
+    background-color: #1f98de;
+    color: rgb(255, 255, 255);
+    font-size: 17px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    margin-bottom: 10px;  
+    cursor: pointer;
+}
+
+span{
+    margin-left: 20px;
+}
+
+hr{
+    margin-bottom: 20px;
+}
+
+#ContenedorGeneral{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+#ContenedorMaterias_Bloque_F1{
+    width: 400px;
+    background-color: #ffffff;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+#ContenedorMaterias_Bloque_F2{
+    flex: 1;
+    height: 100%;
+    padding-top: 30px;
+    padding-left: 70px;
+    padding-right: 70px;
+    padding-bottom: 60px;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+
+
+#ContenedorMaterias_Bloque_F1 img{
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 40px;
+}
+
+
+.ContenedorMaterias_Bloque_F1_Opciones{
+    display: inline-block; 
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+
+}
+
+/* Inicio del burger */
+#menuToggle{
+    display: none;
+    margin-right: 10px;
+}
+#checkbox {
+    display: none;
+  }
+  
+  .toggle {
+    position: relative;
+    width: 30px;
+    cursor: pointer;
+    margin: auto;
+    display: block;
+    height: calc(4px * 3 + 8px * 2);
+  }
+  
+  .bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-radius: calc(4px / 2);
+    background: #ffffff;
+    color: inherit;
+    opacity: 1;
+    transition: none 0.35s cubic-bezier(.5,-0.35,.35,1.5) 0s;
+  }
+  
+  /***** Collapse Animation *****/
+  
+  .bar--top {
+    bottom: calc(50% + 8px + 4px/ 2);
+    transition-property: bottom,margin,transform;
+    transition-delay: calc(0s + 0.35s),0s,0s;
+  }
+  
+  .bar--middle {
+    top: calc(50% - 4px/ 2);
+    transition-property: top,opacity;
+    transition-duration: 0.35s,0s;
+    transition-delay: calc(0s + 0.35s * 1.3),calc(0s + 0.35s * 1.3);
+  }
+  
+  .bar--bottom {
+    top: calc(50% + 8px + 4px/ 2);
+    transition-property: top,transform;
+    transition-delay: 0s;
+  }
+  
+  #checkbox:checked + .toggle .bar--top {
+    bottom: calc(50% - 11px - 4px);
+    margin-bottom: calc(11px + 4px/ 2);
+    transform: rotate(45deg);
+    transition-delay: calc(0s + 0.35s * .3),calc(0s + 0.35s * 1.3),calc(0s + 0.35s * 1.3);
+  }
+  
+  #checkbox:checked + .toggle .bar--middle {
+    top: calc(50% + 11px);
+    opacity: 0;
+    transition-duration: 0.35s,0s;
+    transition-delay: 0s,calc(0s + 0.35s);
+  }
+  
+  #checkbox:checked + .toggle .bar--bottom {
+    top: calc(50% - 4px/ 2);
+    transform: rotate(-45deg);
+    transition-delay: calc(0s + 0.35s * 1.3),calc(0s + 0.35s * 1.3);
+  }
+
+
+
+#menu {
+    position: absolute;
+    right: 20px;
+    margin-top: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    width: 200px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s, visibility 0s 0.5s;
+    z-index: 10; /* Asegura que esté sobre otros elementos */
+
+}
+
+#menu ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0;
+}
+
+#menu ul li {
+    padding: 10px;
+}
+
+#menu ul li a {
+    text-decoration: none;
+    color: #000000;
+    display: block;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#menu ul li a:hover {
+    background-color: #DE911F;
+    color: #ffffff;
+}
+
+#checkbox:checked + .toggle + #menu {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0.5s;
+    transition: opacity 0.5s 0.5s, visibility 0s 0.5s;
+}
+
+/* Fin del burger */
+
+
+
+
+
+/* Configuración del Perfil */
+
+.Img_F2_Publicacion {
+    width: 100%; /* La imagen se ajusta al ancho del contenedor */
+    height: 100%; /* La imagen se ajusta a la altura del contenedor */
+    max-width: 1080px; /* Ancho máximo recomendado por Facebook */
+    max-height: 1080px; /* Alto máximo recomendado por Facebook */
+    object-fit: cover; /* Mantiene la proporción de la imagen, recortando si es necesario */
+    display: block; /* Elimina espacios no deseados al ser inline */
+    border-radius: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); /* Sombra suave */
+
+}
+
+.publicacion{
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3); /* Sombra suave */
+}
+
+.Post_Perfil{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+.Informacion_Post{
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+#Contenedor_Informacion {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+#Contenedor_Informacion img{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+
+
+
+@media screen  and (max-width:950px){       
+    
+    #ContenedorGeneral {
+        width: 100%;
+        height: 100%;
+        display: inline-block; 
+    }
+
+    #ContenedorMaterias_Bloque_F1{
+        width: 100%;
+        background-color: #083D77;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        box-sizing: border-box;
+        align-items: flex-end;
+    }
+    .ContenedorMaterias_Bloque_F1_Opciones{     
+        display: none;  
+    }
+
+    hr{
+        display: none;
+    }
+    #menuToggle{
+        display: inline;
+    }
+
+   
+
+   
+    
+}  
+
+
+@media screen  and (max-width:650px){       
+    
+   h1{
+        font-size: 30px;
+    }
+
+   #ContenedorMaterias_Bloque_F2{
+    
+        padding-left: 25px;
+        padding-right: 25px;
+
+    }
+   
+
+    
+   
+}  
+
+
+@media screen  and (max-width:400px){       
+    
+    .Post_Perfil{
+        width: 40px;
+        height: 40px;
+    }
+
+    h3{
+        font-size: 20px;
+    }
+    
+ } 
+
+

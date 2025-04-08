@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/configuracion_perfil.css">
+    <link rel="icon" href="/src/icono.jpg" type="image/jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">    
+    <title>Configuración Perfil</title>
+</head>
+<body>
+
+    <main id="ContenedorGeneral">
+
+        <section id="ContenedorMaterias_Bloque_F1">
+
+            <div class="ContenedorMaterias_Bloque_F1_Opciones" id="mi_perfil">
+                <img src="/src/home.png" alt="Inicio" style="vertical-align: middle;">
+                <span style="vertical-align: middle;">Mi Perfil</span>
+            </div>
+
+            <div class="ContenedorMaterias_Bloque_F1_Opciones" style="border-radius: 20px; border: 2px solid #083D77;" onclick="location.href = '/configuracion/perfil';">
+                <img src="/src/editar_perfil.png" alt="Perfil" style="vertical-align: middle;">
+                <span style="vertical-align: middle;">Editar Perfil</span>
+            </div>
+            
+
+            <div class="ContenedorMaterias_Bloque_F1_Opciones" onclick="location.href = '/configuracion/credenciales';">
+                <img src="/src/password.png" alt="Credenciales" style="vertical-align: middle;">
+                <span style="vertical-align: middle;">Credenciales</span>
+            </div>
+
+            <div class="ContenedorMaterias_Bloque_F1_Opciones" onclick="location.href = '/configuracion/habilidades';">
+                <img src="/src/skill.png" alt="Habilidades"  style="vertical-align: middle;">
+                <span style="vertical-align: middle;">Habilidades</span>
+            </div>
+
+
+            <div class="ContenedorMaterias_Bloque_F1_Opciones" onclick="location.href = '/';">
+                <img src="/src/salir.png" alt="Salir" style="vertical-align: middle;">
+                <span style="vertical-align: middle;">Salir</span>
+            </div>
+           
+           
+          
+            <div id="menuToggle"> 
+              <input id="checkbox" type="checkbox">
+              <label class="toggle" for="checkbox">
+                  <div class="bar bar--top"></div>
+                  <div class="bar bar--middle"></div>
+                  <div class="bar bar--bottom"></div>
+              </label>
+
+              <div id="menu">
+                <ul>
+                    <li><a id="mi_perfil1">Mi Perfil</a></li>
+                    <li><a onclick="location.href = '/configuracion/perfil';">Editar Perfil</a></li>
+                    <li><a onclick="location.href = '/configuracion/credenciales';">Credenciales</a></li>
+                    <li><a onclick="location.href = '/configuracion/habilidades';">Habilidades</a></li>
+                    <li><a onclick="location.href = '/';">Salir</a></li>
+                </ul>
+            </div>
+            </div>
+      
+
+        </section>
+
+        <section id="ContenedorMaterias_Bloque_F2">
+            <h1>Editar Perfil</h1>
+
+            <h3>Avatar</h3>
+            
+            <article class="F2_Centrado">
+                <!-- Imagen grande -->
+                <div class="imagen-contenedor">
+                    <img id="Img_F2_Perfil" src="/src/icono_perfil.jpg" alt="Imagen Perfil">
+                    <!-- Imagen pequeña -->
+                    <img class="imagen-pequena" src="/src/icono_perfil.jpg" alt="Imagen Web">
+
+                    <input type="file" accept="image/*"  id="Inp_Imagen_Seleccionada" style="display: none;">
+                </div>
+            </article>
+
+            <h3>Nombre</h3>
+            <input id="Inp_Nombre" type="text" maxlength="30" autocomplete="off">
+
+            <h3>Sobre mí</h3>
+            <!-- <textarea id="Txt_Descripcion" autocomplete="off"></textarea>   -->
+            
+            <div style="position: relative;">
+                <textarea id="Txt_Descripcion" maxlength="1000" autocomplete="off" ></textarea>
+                <button id="Btn_Mejorar_IA" title="Mejorar descripción con IA"
+                        style="
+                            position: absolute;
+                            bottom: 20px;
+                            right: 10px;
+                            width: 35px;
+                            height: 35px;
+                            border-radius: 50%;
+                            border: none;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 14px;
+                        ">
+                    IA
+                </button>
+            </div>
+            
+
+            
+            <button id="Btn_Guardar_Cambios">Guardar Cambios</button>
+
+
+        </section>
+
+    </main>
+
+    <!-- Contenedor de la alerta -->
+    <div class="alert-container" id="alertContainer">
+        <div class="alert-box">
+
+            <div class="header">
+                <span class="icon">
+                  <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path clip-rule="evenodd" d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z" fill-rule="evenodd"></path>
+                  </svg>
+                </span>
+                <p class="alert">Mejora con IA</p>
+              </div>
+
+            <div class="alert-text" id="alertText">
+            </div>
+            <button class="alert-button" onclick="closeAlert()">Cerrar</button>
+        </div>
+    </div>
+
+    <script src="/js/configuracion_perfil.js"></script>
+
+</body>
+</html>
+

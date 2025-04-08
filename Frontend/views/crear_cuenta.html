@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="icon" href="/src/icono.jpg" type="image/jpg">
+    <title>Crear Cuenta</title>
+</head>
+<body>
+    <main>
+        <section id="Imagen">
+
+            <img src="/src/login.jpg">
+
+        </section>
+        <section class="Contenido">
+
+            <h1>Bienvenidos a PrograRed</h1>
+            <p style="text-align: left;">Nota: Antes de enviar el mensaje de verificación, es necesario hacer clic en el enlace <a target="_blank" href="https://wa.me/14155238886?text=join%20changing-cave">(Registrar Número)</a> y enviar el mensaje. De lo contrario, el mensaje no llegará al número proporcionado.</p>
+            <h3>Usuario</h3>
+            <input id="Inp_Usuario" type="text" required placeholder="Usuario_123" maxlength="30" oninput="this.value = this.value.replace(/[^A-Za-zñÑÁÉÍÓÚáéíóú0-9_]/g, '');" autocomplete="off">
+            <h3>Teléfono</h3>
+            <input id="Inp_Telefono" type="text" required placeholder="0987654321" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '');" autocomplete="off">
+            <h3>Contraseña</h3>
+            <input id="Inp_Clave" type="text" required placeholder="uce_123" maxlength="30" oninput="this.value = this.value.replace(/[^A-Za-zñÑÁÉÍÓÚáéíóú0-9_]/g, '');" autocomplete="off">
+            <button id="Btn_Crear_Cuenta" style="background-color: #D32B2B; color: white; margin-top: 20px;">Crear Cuenta</button>
+            <button id="Btn_Iniciar_Sesion" style="color: #D32B2B; margin-bottom: 20px;">Iniciar Sesión</button>
+
+        </section>
+    </main>
+
+
+    <script type="module" src="/js/crear_cuenta.js"></script>
+
+</body>
+</html>

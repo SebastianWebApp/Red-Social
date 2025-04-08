@@ -1,0 +1,496 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+html,body{
+    width: 100%;
+    height: 100%;  
+    font-family: "Roboto", sans-serif;
+    background-color: #f5f5f5;   
+    overflow: hidden;  
+}
+
+h1{
+    font-size: 40px;
+    color: #000000;
+    margin-bottom: 20px;
+}
+h3{
+    margin-bottom: 10px;
+}
+p{
+    size: 10px;
+}
+input{
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+textarea{
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    box-sizing: border-box;
+    resize: none;
+    font-family: "Roboto", sans-serif;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+button{
+    width: 100%;
+    background-color: #1f98de;
+    color: rgb(255, 255, 255);
+    font-size: 17px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    margin-bottom: 10px;  
+    cursor: pointer;
+}
+
+span{
+    margin-left: 20px;
+}
+
+hr{
+    margin-bottom: 20px;
+}
+
+#ContenedorGeneral{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+#ContenedorMaterias_Bloque_F1{
+    width: 300px;
+    background-color: #ffffff;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+#ContenedorMaterias_Bloque_F2{
+    flex: 1;
+    height: 100%;
+    padding-top: 30px;
+    padding-left: 70px;
+    padding-right: 70px;
+    padding-bottom: 60px;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+
+
+#ContenedorMaterias_Bloque_F1 img{
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 40px;
+}
+
+
+.ContenedorMaterias_Bloque_F1_Opciones{
+    display: inline-block; 
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+
+}
+
+/* Inicio del burger */
+#menuToggle{
+    display: none;
+    margin-right: 10px;
+}
+#checkbox {
+    display: none;
+  }
+  
+  .toggle {
+    position: relative;
+    width: 30px;
+    cursor: pointer;
+    margin: auto;
+    display: block;
+    height: calc(4px * 3 + 8px * 2);
+  }
+  
+  .bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-radius: calc(4px / 2);
+    background: #ffffff;
+    color: inherit;
+    opacity: 1;
+    transition: none 0.35s cubic-bezier(.5,-0.35,.35,1.5) 0s;
+  }
+  
+  /***** Collapse Animation *****/
+  
+  .bar--top {
+    bottom: calc(50% + 8px + 4px/ 2);
+    transition-property: bottom,margin,transform;
+    transition-delay: calc(0s + 0.35s),0s,0s;
+  }
+  
+  .bar--middle {
+    top: calc(50% - 4px/ 2);
+    transition-property: top,opacity;
+    transition-duration: 0.35s,0s;
+    transition-delay: calc(0s + 0.35s * 1.3),calc(0s + 0.35s * 1.3);
+  }
+  
+  .bar--bottom {
+    top: calc(50% + 8px + 4px/ 2);
+    transition-property: top,transform;
+    transition-delay: 0s;
+  }
+  
+  #checkbox:checked + .toggle .bar--top {
+    bottom: calc(50% - 11px - 4px);
+    margin-bottom: calc(11px + 4px/ 2);
+    transform: rotate(45deg);
+    transition-delay: calc(0s + 0.35s * .3),calc(0s + 0.35s * 1.3),calc(0s + 0.35s * 1.3);
+  }
+  
+  #checkbox:checked + .toggle .bar--middle {
+    top: calc(50% + 11px);
+    opacity: 0;
+    transition-duration: 0.35s,0s;
+    transition-delay: 0s,calc(0s + 0.35s);
+  }
+  
+  #checkbox:checked + .toggle .bar--bottom {
+    top: calc(50% - 4px/ 2);
+    transform: rotate(-45deg);
+    transition-delay: calc(0s + 0.35s * 1.3),calc(0s + 0.35s * 1.3);
+  }
+
+
+
+#menu {
+    position: absolute;
+    right: 20px;
+    margin-top: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    width: 200px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s, visibility 0s 0.5s;
+    z-index: 10; /* Asegura que esté sobre otros elementos */
+
+}
+
+#menu ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0;
+}
+
+#menu ul li {
+    padding: 10px;
+}
+
+#menu ul li a {
+    text-decoration: none;
+    color: #000000;
+    display: block;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#menu ul li a:hover {
+    background-color: #DE911F;
+    color: #ffffff;
+}
+
+#checkbox:checked + .toggle + #menu {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0.5s;
+    transition: opacity 0.5s 0.5s, visibility 0s 0.5s;
+}
+
+/* Fin del burger */
+
+
+
+
+
+/* Configuración del Perfil */
+
+
+
+.F2_Centrado{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagen-contenedor {
+    position: relative;
+    display: inline-block; /* Para que las imágenes se adapten a su tamaño */
+}
+
+/* Imagen grande */
+#Img_F2_Perfil {
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 250px;
+    height: 250px;
+    border-radius: 100%;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+/* Imagen pequeña */
+.imagen-pequena {
+    position: absolute;
+    bottom: 7px; /* Ajusta la posición vertical desde el borde inferior */
+    right: 20px; /* Ajusta la posición horizontal desde el borde derecho */
+    width: 50px; /* Tamaño de la imagen pequeña */
+    height: 50px;
+    border-radius: 50%; /* Redondea los bordes para hacerlo circular */
+    border: 2px solid white; /* Opcional: Agregar un borde para destacar */
+    background-color: #fff; /* Fondo blanco para destacar */
+}
+
+
+.F2_Division {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    gap: 20px; /* Espacio entre elementos */
+}
+
+.F2_Division_Crear {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    gap: 20px; /* Espacio entre elementos */
+}
+
+.F2_Division article{
+    flex: 1 1 30%; 
+    
+    /* flex-grow: 0: El elemento no crecerá más allá de su tamaño especificado.
+    flex-shrink: 0: El elemento no se reducirá si hay falta de espacio.
+    flex-basis: 30%: El elemento ocupará el 30% del ancho del contenedor. */
+
+    border: 2px solid #083D77;
+    border-radius: 10px;
+    cursor: pointer;
+    min-width: 250px;
+}
+
+
+
+.F2_Division_Imagen {
+    width: 100px;
+    height: 100px;
+    border-radius: 20%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.F2_Division input {
+    margin-bottom: 5px;
+    padding: 5px;
+    font-size: 16px;
+}
+
+
+
+
+
+
+/* Estilo Cuadro Alerta */
+
+
+ /* Estilo del fondo de la alerta */
+ .alert-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    display: none; /* Oculto por defecto */
+}
+
+/* Estilo del contenido de la alerta */
+.alert-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: 300px;
+    min-width: 200px;
+}
+
+.alert-text {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+    user-select: text; /* Permitir selección de texto */
+    text-align: left;
+}
+
+.alert-button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.alert-button:hover {
+    background-color: #0056b3;
+}
+
+
+.header {
+    display: flex;
+    align-items: center;
+    grid-gap: 1rem;
+    gap: 1rem;
+    margin-bottom: 10px;
+}
+  
+.icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background-color: rgba(96, 165, 250, 1);
+    padding: 0.5rem;
+    color: rgba(255, 255, 255, 1);
+    margin-left: 0px;
+}
+  
+.icon svg {
+    height: 1rem;
+    width: 1rem;
+}
+/* Fin Cuadro Alerta */
+
+
+
+
+
+
+
+
+
+@media screen  and (max-width:950px){    
+    .F2_Division_Crear div{
+        width: 100%;
+    }
+}
+
+
+
+
+@media screen  and (max-width:800px){       
+    
+    #ContenedorGeneral {
+        width: 100%;
+        height: 100%;
+        display: inline-block; 
+    }
+
+    #ContenedorMaterias_Bloque_F1{
+        width: 100%;
+        background-color: #083D77;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        box-sizing: border-box;
+        align-items: flex-end;
+    }
+    .ContenedorMaterias_Bloque_F1_Opciones{     
+        display: none;  
+    }
+
+    hr{
+        display: none;
+    }
+    #menuToggle{
+        display: inline;
+    }
+
+   
+
+   
+    
+}  
+
+
+@media screen  and (max-width:650px){       
+    
+   h1{
+        font-size: 30px;
+    }
+
+   #ContenedorMaterias_Bloque_F2{
+    
+        padding-left: 25px;
+        padding-right: 25px;
+
+    }
+    /* Imagen grande */
+    #Img_F2_Perfil {
+        width: 200px;
+        height: 200px;
+    }
+
+    .F2_Division article{
+        flex: 1 1 100%;
+        min-width: 0px;
+    }
+    
+   
+}  
+

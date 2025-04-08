@@ -1,0 +1,5 @@
+ruby servidor.rb
+node --watch servidor.js
+go run main.go
+docker-compose up --build
+docker-compose down      
