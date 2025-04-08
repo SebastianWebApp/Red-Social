@@ -24,7 +24,7 @@ post '/' do
     # Crear la solicitud POST
     request = Net::HTTP::Post.new(uri)
     request["Content-Type"] = "application/json"
-    request["Authorization"] = "Bearer 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"  # Usa tu propia clave API aquí
+    request["Authorization"] = "Bearer"  # Usa tu propia clave API aquí
 
     # Crear el cuerpo de la solicitud
     request.body = JSON.dump({
